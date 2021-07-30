@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="js">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="イヤホン、スピーカのエージング [BBB Aging]">
+    <title>BBB Aging</title>
+</head>
+<body>
+    <div id="tit">
+        <h1>BBB Aging</h1>
+        <p>イヤホンとスピーカのエージングをしましょう。<br>イヤホンは外してから実行してください。</p>
+        </div>
+    <div id="main_cont">
+        <p class="cnts">波形 (wave)</p>
+        <select name="wave_type" id="wave_type" onchange="change_val();">
+            <option value="sine">正弦波 (Sine wave)</option>
+            <option value="square">矩形波 (Square wave)</option>
+            <option value="sawtooth">のこぎり波 (Sawtooth wave)</option>
+            <option value="triangle">三角波 (Triangle wave)</option>
+        </select>
+        
+        <p class="cnts">最低周波数 (Minimum frequency)</p><input type="number" id="min_freq" onchange="change_val();"> Hz
+        <p class="cnts">最高周波数 (Maximum frequency)</p><input type="number" id="max_freq" onchange="change_val();"> Hz
+        <div class="cnts"><p style="margin: 0;">周波数</p>Min <input type="range" id="freq_range" onchange="change_freq();"> Max<p id="now_freq"></p></div>
+        <p class="cnts"><button onclick="play();">再生</button>&emsp;<button onclick="stop();">停止</button></p>
+    </div>
+</body>
+<style>
+    #tit h1 {
+        text-align: center;
+        font-size: 1.5em;
+        font-weight: 400;
+        margin-top: 40px;
+    }
+    #tit p {
+        text-align: center;
+    }
+    #freq_range {
+        width: 100%;
+    }
+    #main_cont {
+        text-align: center;
+        width: 600px;
+        margin-left: calc(50% - 300px);
+        border: solid 1px #999;
+        padding: 0 10px 20px 10px;
+    }
+    #main_cont select {
+        padding: 5px 10px;
+        width: 220px;
+    }
+    #main_cont input[type="number"] {
+        padding: 5px 10px;
+        width: 200px;
+    }
+    .cnts {
+        margin-top: 30px;
+        margin-bottom: 0;
+    }
+    #main_cont button {
+        padding: 5px 30px;
+    }
+    #freq_range {
+        margin-top: 0;
+        width: 300px;
+    }
+    #now_freq {
+        margin-top: 0;
+        margin-bottom: 40px;
+    }
+</style>
+<script>
+    var min_freq = document.getElementById('min_freq');
+    var max_freq = document.getElementById('max_freq');
+    var freq_range = document.getElementById('freq_range');
+    var now_freq = document.getElementById('now_freq');
+    var audioCtx, oscillator;
+    var playing = false;
+
+    window.onload = function() {
+        min_freq.value = 1;
+        max_freq.value = 48000;
+        change_val();
+        freq_range.value = 440;
+        change_freq();
+    }
+
+    function change_val() {
+        freq_range.min = min_freq.value;
+        freq_range.max = max_freq.value;
+        change_freq();
+    }
+
+    function change_freq() {
+        now_freq.innerHTML = freq_range.value + 'Hz';
+        console.log(freq_range.value + 'Hz');
+        if (playing) play();
+    }
+
+    function play() {
+        if (playing) stop(); // 既に再生中
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        oscillator = audioCtx.createOscillator();
+        var wave_type = document.getElementById('wave_type').value;
+        oscillator.type = wave_type;
+        oscillator.frequency.setValueAtTime(freq_range.value, audioCtx.currentTime); // value in hertz
+        oscillator.connect(audioCtx.destination);
+        oscillator.start();
+        playing = true;
+    }
+
+    function stop() {
+        oscillator.stop();
+        playing = false;
+    }
+</script>
+</html>
