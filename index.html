@@ -95,13 +95,13 @@
         change_freq();
     }
 
-    function change_val() {
+    function change_val() { // 最低,最高周波数を変更したとき
         freq_range.min = min_freq.value;
         freq_range.max = max_freq.value;
         change_freq();
     }
 
-    function change_freq() {
+    function change_freq() { // 値を変更したとき
         now_freq.innerHTML = freq_range.value + 'Hz';
         now_vol.innerHTML = (vol_range.value);
         console.log('Freq: '+freq_range.value+'Hz  Vol:'+vol_range.value);
@@ -123,7 +123,7 @@
         playing = true;
     }
 
-    function stop() {
+    function stop() { // 停止
         oscillator.stop();
         playing = false;
     }
