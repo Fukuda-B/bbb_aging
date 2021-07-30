@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="イヤホン、スピーカのエージング [BBB Aging]">
+    <link rel="stylesheet" href="style.css">
     <title>BBB Aging</title>
 </head>
 <body>
@@ -28,104 +29,5 @@
         <p class="cnts"><button onclick="play();">再生</button>&emsp;<button onclick="stop();">停止</button></p>
     </div>
 </body>
-<style>
-    #tit h1 {
-        text-align: center;
-        font-size: 1.5em;
-        font-weight: 400;
-        margin-top: 40px;
-    }
-    #tit p {
-        text-align: center;
-    }
-    #freq_range {
-        width: 100%;
-    }
-    #main_cont {
-        text-align: center;
-        width: 600px;
-        margin-left: calc(50% - 300px);
-        border: solid 1px #999;
-        padding: 0 10px 20px 10px;
-        border-radius: 4px;
-    }
-    #main_cont select {
-        padding: 5px 10px;
-        width: 220px;
-    }
-    #main_cont input[type="number"] {
-        padding: 5px 10px;
-        width: 200px;
-    }
-    .cnts {
-        margin-top: 30px;
-        margin-bottom: 0;
-    }
-    .cuts {
-        border-top: solid 1px #999;
-        padding-top: 20px;
-    }
-    #main_cont button {
-        padding: 5px 30px;
-    }
-    #freq_range, #vol_range {
-        margin-top: 0;
-        width: 300px;
-    }
-    #now_freq, #now_vol {
-        margin-top: 0;
-        margin-bottom: 40px;
-    }
-</style>
-<script>
-    var min_freq = document.getElementById('min_freq');
-    var max_freq = document.getElementById('max_freq');
-    var freq_range = document.getElementById('freq_range');
-    var vol_range = document.getElementById('vol_range');
-    var now_freq = document.getElementById('now_freq');
-    var wave_type = document.getElementById('wave_type');
-    var audioCtx, oscillator, volume;
-    var playing = false;
-
-    window.onload = function() {
-        min_freq.value = 1;
-        max_freq.value = 48000;
-        change_val();
-        freq_range.value = 440;
-        change_freq();
-    }
-
-    function change_val() { // 最低,最高周波数を変更したとき
-        freq_range.min = min_freq.value;
-        freq_range.max = max_freq.value;
-        change_freq();
-    }
-
-    function change_freq() { // 値を変更したとき
-        now_freq.innerHTML = freq_range.value + 'Hz';
-        now_vol.innerHTML = (vol_range.value);
-        console.log('Freq: '+freq_range.value+'Hz  Vol:'+vol_range.value);
-        if (playing) play();
-    }
-
-    function play() {
-        if (playing) stop(); // 既に再生中
-        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        oscillator = audioCtx.createOscillator(); // 波形
-        oscillator.type = wave_type.value;
-        volume = audioCtx.createGain(); // 音量
-        oscillator.connect(volume);
-        volume.connect(audioCtx.destination);
-        volume.gain.value = vol_range.value;
-        oscillator.frequency.setValueAtTime(freq_range.value, audioCtx.currentTime); // value in hertz
-        // oscillator.connect(audioCtx.destination);
-        oscillator.start();
-        playing = true;
-    }
-
-    function stop() { // 停止
-        oscillator.stop();
-        playing = false;
-    }
-</script>
+<script src="main.js"></script>
 </html>

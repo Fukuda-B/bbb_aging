@@ -1,0 +1,47 @@
+#tit h1 {
+    text-align: center;
+    font-size: 1.5em;
+    font-weight: 400;
+    margin-top: 40px;
+}
+#tit p {
+    text-align: center;
+}
+#freq_range {
+    width: 100%;
+}
+#main_cont {
+    text-align: center;
+    width: 600px;
+    margin-left: calc(50% - 300px);
+    border: solid 1px #999;
+    padding: 0 10px 20px 10px;
+    border-radius: 4px;
+}
+#main_cont select {
+    padding: 5px 10px;
+    width: 220px;
+}
+#main_cont input[type="number"] {
+    padding: 5px 10px;
+    width: 200px;
+}
+.cnts {
+    margin-top: 30px;
+    margin-bottom: 0;
+}
+.cuts {
+    border-top: solid 1px #999;
+    padding-top: 20px;
+}
+#main_cont button {
+    padding: 5px 30px;
+}
+#freq_range, #vol_range {
+    margin-top: 0;
+    width: 300px;
+}
+#now_freq, #now_vol {
+    margin-top: 0;
+    margin-bottom: 40px;
+}
