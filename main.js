@@ -7,13 +7,13 @@ var wave_type = document.getElementById('wave_type');
 var audioCtx, oscillator, volume;
 var playing = false;
 
-window.onload = function() {
+window.addEventListener('load', (event) => {
     min_freq.value = 1;
     max_freq.value = 48000;
     change_val();
     freq_range.value = 440;
     change_freq();
-}
+});
 
 function change_val() { // 最低,最高周波数を変更したとき
     freq_range.min = min_freq.value;
