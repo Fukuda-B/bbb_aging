@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="js">
+<html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -23,7 +23,8 @@
         
         <p class="cnts">最低周波数 (Minimum frequency)</p><input type="number" id="min_freq" onchange="change_val();"> Hz
         <p class="cnts">最高周波数 (Maximum frequency)</p><input type="number" id="max_freq" onchange="change_val();"> Hz
-        <div class="cnts"><p style="margin: 0;">周波数</p>Min <input type="range" id="freq_range" onchange="change_freq();"> Max<p id="now_freq"></p></div>
+        <div class="cnts cuts"><p style="margin: 0;">周波数 (frequency)</p>Min <input type="range" id="freq_range" onchange="change_freq();"> Max<p id="now_freq"></p></div>
+        <div class="cnts"><p style="margin: 0;">音量 (volume)</p>Min <input type="range" id="vol_range" min="0" max="1" step="0.01" onchange="change_freq();"> Max<p id="now_vol"></p></div>
         <p class="cnts"><button onclick="play();">再生</button>&emsp;<button onclick="stop();">停止</button></p>
     </div>
 </body>
@@ -46,6 +47,7 @@
         margin-left: calc(50% - 300px);
         border: solid 1px #999;
         padding: 0 10px 20px 10px;
+        border-radius: 4px;
     }
     #main_cont select {
         padding: 5px 10px;
@@ -59,14 +61,18 @@
         margin-top: 30px;
         margin-bottom: 0;
     }
+    .cuts {
+        border-top: solid 1px #999;
+        padding-top: 20px;
+    }
     #main_cont button {
         padding: 5px 30px;
     }
-    #freq_range {
+    #freq_range, #vol_range {
         margin-top: 0;
         width: 300px;
     }
-    #now_freq {
+    #now_freq, #now_vol {
         margin-top: 0;
         margin-bottom: 40px;
     }
@@ -75,8 +81,10 @@
     var min_freq = document.getElementById('min_freq');
     var max_freq = document.getElementById('max_freq');
     var freq_range = document.getElementById('freq_range');
+    var vol_range = document.getElementById('vol_range');
     var now_freq = document.getElementById('now_freq');
-    var audioCtx, oscillator;
+    var wave_type = document.getElementById('wave_type');
+    var audioCtx, oscillator, volume;
     var playing = false;
 
     window.onload = function() {
@@ -95,18 +103,22 @@
 
     function change_freq() {
         now_freq.innerHTML = freq_range.value + 'Hz';
-        console.log(freq_range.value + 'Hz');
+        now_vol.innerHTML = (vol_range.value);
+        console.log('Freq: '+freq_range.value+'Hz  Vol:'+vol_range.value);
         if (playing) play();
     }
 
     function play() {
         if (playing) stop(); // 既に再生中
         audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        oscillator = audioCtx.createOscillator();
-        var wave_type = document.getElementById('wave_type').value;
-        oscillator.type = wave_type;
+        oscillator = audioCtx.createOscillator(); // 波形
+        oscillator.type = wave_type.value;
+        volume = audioCtx.createGain(); // 音量
+        oscillator.connect(volume);
+        volume.connect(audioCtx.destination);
+        volume.gain.value = vol_range.value;
         oscillator.frequency.setValueAtTime(freq_range.value, audioCtx.currentTime); // value in hertz
-        oscillator.connect(audioCtx.destination);
+        // oscillator.connect(audioCtx.destination);
         oscillator.start();
         playing = true;
     }
