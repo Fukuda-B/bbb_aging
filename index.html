@@ -10,7 +10,7 @@
 <body>
     <div id="tit">
         <h1>BBB Aging</h1>
-        <p>イヤホンとスピーカのエージングをしましょう。<br>イヤホンは外してから実行してください。</p>
+        <p>イヤホンとスピーカのエージングをしましょう。<br>イヤホンは耳から外してから実行してください。</p>
         </div>
     <div id="main_cont">
         <p class="cnts">波形 (wave)</p>
@@ -20,7 +20,7 @@
             <option value="sawtooth">のこぎり波 (Sawtooth wave)</option>
             <option value="triangle">三角波 (Triangle wave)</option>
         </select>
-        
+
         <p class="cnts">最低周波数 (Minimum frequency)</p><input type="number" id="min_freq" onchange="change_val();"> Hz
         <p class="cnts">最高周波数 (Maximum frequency)</p><input type="number" id="max_freq" onchange="change_val();"> Hz
         <div class="cnts cuts"><p style="margin: 0;">周波数 (frequency)</p>Min <input type="range" id="freq_range" onchange="change_freq();"> Max<p id="now_freq"></p></div>
