@@ -22,5 +22,5 @@ Access from here ↓
 - frequency  
   - Depends on playback environment.  
 
-- valume  
+- volume  
   - range : 0 ~ 1  
