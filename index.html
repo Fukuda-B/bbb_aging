@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="イヤホン、スピーカのエージング [BBB Aging]">
+    <meta name="google-site-verification" content="2SnRUKSQvEjYt4mvpOYiJXV--zQ2Enth_F4zE3qAYvM" />
     <link rel="stylesheet" href="style.css">
     <title>BBB Aging</title>
 </head>
@@ -13,17 +14,34 @@
         <p>イヤホンとスピーカのエージングをしましょう。<br>イヤホンは耳から外してから実行してください。</p>
         </div>
     <div id="main_cont">
-        <p class="cnts">波形 (wave)</p>
-        <select name="wave_type" id="wave_type" onchange="change_val();">
-            <option value="sine">正弦波 (Sine wave)</option>
-            <option value="square">矩形波 (Square wave)</option>
-            <option value="sawtooth">のこぎり波 (Sawtooth wave)</option>
-            <option value="triangle">三角波 (Triangle wave)</option>
-        </select>
-
-        <p class="cnts">最低周波数 (Minimum frequency)</p><input type="number" id="min_freq" onchange="change_val();"> Hz
-        <p class="cnts">最高周波数 (Maximum frequency)</p><input type="number" id="max_freq" onchange="change_val();"> Hz
-        <div class="cnts cuts"><p style="margin: 0;">周波数 (frequency)</p>Min <input type="range" id="freq_range" onchange="change_freq();"> Max<p id="now_freq"></p></div>
+        <!-- <div id="select_rd" class="cnts">
+            <input type="radio" name="wn" id="wn_wave">
+            <label for="wn_wave">波形 (wave)</label>
+            <input type="radio" name="wn" id="wn_noise">
+            <label for="wn_noise">ノイズ (noise)</label>
+        </div> -->
+        <div id="wave">
+            <p class="cnts">波形 (wave)</p>
+            <select name="wave_type" id="wave_type" onchange="change_val();">
+                <option value="sine">正弦波 (Sine wave)</option>
+                <option value="square">矩形波 (Square wave)</option>
+                <option value="sawtooth">のこぎり波 (Sawtooth wave)</option>
+                <option value="triangle">三角波 (Triangle wave)</option>
+            </select>
+            <p class="cnts">最低周波数 (Minimum frequency)</p><input type="number" id="min_freq" onchange="change_val();"> Hz
+            <p class="cnts">最高周波数 (Maximum frequency)</p><input type="number" id="max_freq" onchange="change_val();"> Hz
+            <div class="cnts cuts"><p style="margin: 0;">周波数 (frequency)</p>Min <input type="range" id="freq_range" onchange="change_freq();"> Max<p id="now_freq"></p></div>
+        </div>
+        <div id="noise">
+            <div id="select_rd" class="cnts">
+                <input type="radio" name="noise_sel" id="white_noise">
+                <label for="white_noise">White noise</label>
+                <input type="radio" name="noise_sel" id="pink_noise">
+                <label for="pink_noise">Pink noise</label>
+                <input type="radio" name="noise_sel" id="brownian_noise">
+                <label for="brownian_noise">Brownian noise</label>
+            </div>
+        </div>
         <div class="cnts"><p style="margin: 0;">音量 (volume)</p>Min <input type="range" id="vol_range" min="0" max="1" step="0.01" onchange="change_freq();"> Max<p id="now_vol"></p></div>
         <p class="cnts"><button onclick="play();">再生</button>&emsp;<button onclick="stop();">停止</button></p>
     </div>

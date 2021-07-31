@@ -6,8 +6,12 @@ var now_freq = document.getElementById('now_freq');
 var wave_type = document.getElementById('wave_type');
 var audioCtx, oscillator, volume;
 var playing = false;
+var wave_cont = document.getElementById('wave');
+var noise_cont = document.getElementById('noise');
 
 window.addEventListener('load', (event) => {
+    // wave_cont.style.display = 'none';
+    noise_cont.style.display = 'none';
     min_freq.value = 1;
     max_freq.value = 48000;
     change_val();
@@ -46,4 +50,15 @@ function play() {
 function stop() { // 停止
     oscillator.stop();
     playing = false;
+}
+
+function white() {
+    var bufferSize = 16384;
+    var whiteNoise = audioContext.createScriptProcessor(bufferSize, 1, 1);
+    whiteNoise.onaudioprocess = function(e) {
+        var output = e.outputBuffer.getChannelData(0);
+        for (var i = 0; i < bufferSize; i++) {
+            output[i] = Math.random() * 2 - 1;
+        }
+    }
 }
