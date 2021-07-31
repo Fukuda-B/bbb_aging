@@ -1,5 +1,4 @@
 # bbb_aging  
-## Overview  
 イヤホン、スピーカのエージング用  
 Access from here ↓  
 [https://fukuda-b.github.io/bbb_aging/](https://fukuda-b.github.io/bbb_aging/)  
