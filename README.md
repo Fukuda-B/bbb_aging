@@ -12,7 +12,7 @@ Access from here ↓
 5. Press the "再生" button to play the sound.  
 6. Press the "停止" button to stop the sound.  
 
-## description  
+## Description  
 - waveform  
   - Sine wave  
   - Square wave  
@@ -24,3 +24,6 @@ Access from here ↓
 
 - volume  
   - range : 0 ~ 1  
+
+## Future
+Generating several types of noise
